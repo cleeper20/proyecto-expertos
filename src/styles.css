@@ -1,0 +1,73 @@
+/* You can add global styles to this file, and also import other style files */
+body{
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans', sans-serif; /* de la pagina de google fonts*/
+   
+}
+
+
+
+.decoration{
+    color: #212529;
+    text-decoration: none;
+    transition: text-decoration 5s, linear 5s;
+    
+}
+
+.decoration:hover {
+   text-decoration: underline;
+  
+    
+   
+}
+
+
+.centrar{
+    margin: 15% auto;
+
+   
+}
+
+.card-color{
+    background-color: #F8F9FA;
+}
+
+.color-primary{
+    background-color: #2F3BF4;
+}
+
+.bg-yellow{
+    background-color: #d6b759;
+}
+
+.bg-greend{
+    background-color: #5d9a6b;
+}
+  
+
+    .btn-orden{
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .centrar{
+        margin-top: 5rem;
+        margin-left: 1.5rem;
+        margin-right: 1.5rem;
+    }
+
+@media (min-width: 576px){
+    .centrar{
+        width: 500px;
+        margin: 10rem auto;
+        
+    }
+
+    .botones{
+        display: flex;
+    }
+
+
+}
+

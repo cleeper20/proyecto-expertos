@@ -1,0 +1,126 @@
+<nav class="bg-dark d-flex justify-content-between align-items-center p-2">
+    <a class="" href="/workShop">
+        <img src="../assets/cloud development (1).svg" width="170px" class="" alt="" loading="lazy">
+    </a>
+
+    <div class="dropdown show">
+      <a class="btn btn-light mr-4" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-bars"></i>
+      </a>
+    
+      <div class="dropdown-menu mr-menu" aria-labelledby="dropdownMenuLink">
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-credit-card"></i> Detalle de cuenta</a>
+        <a class="dropdown-item" href="/config"><i class="fas fa-cog"></i> Configuracion</a>
+        <a class="dropdown-item" href="/home"><i class="fas fa-sign-out-alt"></i> Salir</a>
+      </div>
+    </div>
+    
+</nav>
+
+<div class="flex" id="wrapper">
+
+   <!-- Sidebar -->
+   <div class="bg-light border-right" id="sidebar-wrapper">
+    <div id="home" routerLink="/workShop" routerLinkActive="active" style="font-size: 1.8rem;"  class="sidebar-heading text-center"><i class="fas fa-home"></i>Inicio</div>
+    <div class="list-group list-group-flush">      
+      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus-circle"></i> Nuevo Proyecto</a>
+      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 1</a>
+      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 2</a>
+      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 3</a>
+      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 4</a>
+      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 5</a>
+      
+    </div>
+  </div>
+<!--Pintar el contenido de la pagina aqui-->
+
+
+<div class="datos">
+
+    <div class="card m-4 rounded-0  card-color">
+        <div>
+               <div class="flex justify-content-center">
+                <img  class="imagen" src="../../assets/user.png" alt="user">
+               </div>
+                    
+                 
+               
+            <div class="container">
+                <div class="row m-3">                   
+                        <input id="nombre" type="text" class="form-control" value="Juan Perez" placeholder="Nombres">                    
+                </div>   
+
+                <div class="row m-3">                   
+                    <input id="apellido" type="text" class="form-control" value="Aguilar Alcachofa" placeholder="Apellidos">                    
+                  </div>   
+    
+                  <div class="row m-3">                   
+                    <input id="email" type="email" class="form-control" value="juanito@gmail.com" placeholder="E-mail">                    
+                  </div>
+    
+    
+                  <div class="row m-3">                   
+                    <input id="pass" type="password" class="form-control" value="asd.456789" placeholder="Contraseña">                    
+                  </div>   
+                
+    
+    
+    
+    
+            </div>
+        </div>
+        <div class="">
+            <a href="/config" class="btn d-block mt-3 mb-3 bg-success text-white btn-width ">Guardar</a>
+            <a href="/config" class="btn d-block mt-3 mb-3 bg-warning text-white btn-width " data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Detalle de cuenta</a>           
+         
+        </div>
+    </div>
+    
+</div>
+
+
+</div>
+
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Tarjeta de Debito</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Numero de Tarjeta</label>
+            <input type="number" class="form-control" id="recipient-name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Fecha de Expiración</label>
+            <div class="d-flex">
+                <input class="form-control w-25 mr-1" type="number" min="00" max="12" placeholder="Mes" >
+                <input class="form-control w-25" type="number" min="2020" max="2022" placeholder="Año">
+
+            </div>
+            
+          </div>
+
+          <div class="form-group">
+            <label for="recipient-name" class="col-form-label">Codigo CVV</label>
+            <input  size="4" type="number" class="form-control" id="recipient-name" pattern="[0-9]" required>
+          </div>
+         
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-warning text-white">Actualizar</button>
+      </div>
+    </div>
+  </div>
+</div>
