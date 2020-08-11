@@ -10,6 +10,7 @@ const app = express();
 
 
 //middlaware
+app.use(cors())
 app.use(express.json());//aceptar json en la peticion 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use('/user',usuariosRouter );

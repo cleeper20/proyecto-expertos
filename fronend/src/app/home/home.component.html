@@ -16,24 +16,34 @@
         <div class="card border card-color centrar" hi>
             <h4 class="text-center mt-4">Iniciar Sesion</h4>
 
-            <img src="../assets/cloud" alt="">
-
+           
+       
             <div class="form-group ml-4 mr-4">
-                <input class="form-control mt-4 mb-4" type="text" placeholder="E-mail">
+                <form [formGroup]="formularioLogin">
+                        <input formControlName="email" class="form-control mt-4 mb-4" type="text" placeholder="E-mail">
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                            <span *ngIf="email.errors.required">El campo E-mail es requerido</span>
+                            <span *ngIf="email.errors.email">Email invalido</span>
+                        </div>
 
-
-                <input class="form-control mt-4 mb-4  j" type="text"
-                    placeholder="Contraseña">
-                <div class="botones justify-content-between align-items-center ">
-                    <a href="#" routerLink="/workShop" routerLinkActive="active" class="d-block btn btn-warning text-white btn-orden">Inciar Sesión</a>
-                    <a href="#" class="d-block decoration btn-orden">¿Olvido su contraseña?</a>
+                        <input formControlName="password" type="password" class="form-control mt-4 mb-4  "     placeholder="Contraseña">
+                        <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+                            <span *ngIf="password.errors.required">La constraseña es requerida</span>
+                        </div>
+                        <div class="botones justify-content-between align-items-center ">
+                        <!-- <a routerLink="/workShop" routerLinkActive="active" class="d-block btn btn-warning text-white btn-orden">Inciar Sesión</a>-->
+                        <a  class="d-block btn btn-warning text-white btn-orden" (click)="singIn()">Inciar Sesión</a> 
+                        <a  class="d-block decoration btn-orden">¿Olvido su contraseña?</a>
+                        </div>
+                </form>
+                <div *ngIf="showAlert" class="text-danger">
+                    <span >{{mensaje}}</span>
                 </div>
 
 
 
-
             </div>
-
+        
         </div>
     </div>
 

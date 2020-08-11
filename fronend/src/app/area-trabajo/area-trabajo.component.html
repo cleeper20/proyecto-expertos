@@ -10,8 +10,8 @@
     
       <div class="dropdown-menu mr-menu" aria-labelledby="dropdownMenuLink">
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-credit-card"></i> Detalle de cuenta</a>
-        <a class="dropdown-item" href="/config"><i class="fas fa-cog"></i> Configuracion</a>
-        <a class="dropdown-item" href="/home"><i class="fas fa-sign-out-alt"></i> Salir</a>
+        <a class="dropdown-item" routerLink="/config" routerLinkActive="active"><i class="fas fa-cog"></i> Configuracion</a>
+        <a class="dropdown-item" (click)="logout()" ><i class="fas fa-sign-out-alt"></i> Salir</a>
       </div>
     </div>
     

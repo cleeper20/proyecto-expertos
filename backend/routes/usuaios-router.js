@@ -13,11 +13,12 @@ router.post('/singup', async (req,res)=>{
     let {nombres, apellidos,email, password,titular, numeroTarjeta, fechaExpiracion,codigoCVV,tipoCuenta}=req.body;//capturando datos del cuerpo de la peticion 
     //instanciando objeto
 
-    let newUser = new modelUser({nombres, apellidos,email, password, titular,numeroTarjeta, fechaExpiracion,codigoCVV,tipoCuenta})
+    let newUser = new modelUser({nombres, apellidos,email, password, titular,numeroTarjeta, fechaExpiracion,codigoCVV,tipoCuenta});
+    const idUser=newUser._id;
     await newUser.save()
     .then(consulta=>{
         const token = jwt.sign({_id:newUser._id},'palabraSecreta')//3 opciones:1 dato que queremos guardar dentro del token, 2 una palabra secreta, 3 opciones del token evisar documentacion del modulo ejemplo la duracion del token
-        res.status(201).json({token})
+        res.status(201).json({token,idUser})
         res.end();
     }).catch(error=>{
         res.status(304).send(error);
@@ -28,7 +29,7 @@ router.post('/singup', async (req,res)=>{
 
 router.post('/singin', async (req,res)=>{
     const {email, password} = req.body;//recibir los datos
-     console.log({email});
+     //console.log({email});
     const  user = await modelUser.findOne({email});
    
     
@@ -42,11 +43,24 @@ router.post('/singin', async (req,res)=>{
         if(result !== true){
             return res.status(401).send('contraseña invalida');
         }else{
-            const token = jwt.sign({_id:user._id}, 'palabraSecreta');
-            return res.status(200).json({token});
+            const idUser = user._id;
+
+            const token = jwt.sign({_id:user._id}, 'palabraSecreta', { expiresIn: '1h' });
+            return res.status(200).json({token, idUser});
         }
     });
 });
+
+//buscar usuario
+
+router.get('/:id', verificarToken , (req,res)=>{
+        modelUser.find({_id:req.params.id}).then(consulta =>{
+            res.status(200).send(consulta[0]);//el elemento cero del arreglo de objetos
+            res.end();
+        }).catch(error=>{
+            res.status(404).send(error);
+        })
+        });
 
 //actualizar usuario
 

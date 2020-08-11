@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../services/auth.service'
 
 
 
@@ -11,9 +12,15 @@ import { Component, OnInit } from '@angular/core';
 
 export class AreaTrabajoComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private authSerive: AuthService,
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  logout(){
+      this.authSerive.logout();
   }
 
 }

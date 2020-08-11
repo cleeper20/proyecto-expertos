@@ -1,195 +1,278 @@
 <div class="logo-registro">
-    <img src="././assets/logo oscuro.svg" class="" routerLink="/home" routerLinkActive="active"  alt="">
+    <img src="././assets/logo oscuro.svg" class="" routerLink="/home" routerLinkActive="active" alt="">
 </div>
 
 <div class="flex">
-<div class="registro-a vertical-auto">
-    <h5 class="text-center titulo-card m-4">Descubrre que version de C-Drive se ajusta mejor a sus necesidades </h5>
-    <div class="m-4 flex anuncios">   
+    <div class="registro-a vertical-auto">
+        <h5 class="text-center titulo-card m-4">Descubrre que version de C-Drive se ajusta mejor a sus necesidades </h5>
+        <div class="m-4 flex anuncios">
 
 
-        <div class="card mt-4 card-color card-decoration">
-            <div class="p-2 bg-success"></div>
-            <p class="text-center mt-3 titulo-card">C-Drive Professional</p>
+            <div class="card mt-4 card-color card-decoration">
+                <div class="p-2 bg-success"></div>
+                <p class="text-center mt-3 titulo-card">C-Drive Professional</p>
 
 
-            <table class="table table-striped">
+                <table class="table table-striped">
 
-                <tr>
+                    <tr>
 
-                    <td><i class="fas fa-check mr-2 text-success"></i>Proyectos Ilimitados</td>
+                        <td><i class="fas fa-check mr-2 text-success"></i>Proyectos Ilimitados</td>
 
-                </tr>
+                    </tr>
 
-                <tr>
+                    <tr>
 
-                    <td><i class="fas fa-check text-success mr-2"></i>Descuentos</td>
+                        <td><i class="fas fa-check text-success mr-2"></i>Descuentos</td>
 
-                </tr>
+                    </tr>
 
-                <tr>
+                    <tr>
 
-                    <td><i class="fas fa-check text-success mr-2"></i>Almacenamiento sin limites</td>
+                        <td><i class="fas fa-check text-success mr-2"></i>Almacenamiento sin limites</td>
 
-                </tr>
+                    </tr>
 
-              
-                <hr class="m-0">                 
 
-                <div (click)="showPro()" class="text-center mt-3 titulo2-card">
-                    <i class="far fa-credit-card text-success mr-2 text-center"></i>Comprar Ahora
-                </div>              
+                    <hr class="m-0">
 
-            </table>
+                    <div (click)="showPro()" class="text-center mt-3 titulo2-card">
+                        <i class="far fa-credit-card text-success mr-2 text-center"></i>Comprar Ahora
+                    </div>
+
+                </table>
+
+
+
+            </div>
+
+            <div class="card mt-4 card-color card-decoration">
+                <div class="p-2 bg-warning"></div>
+                <p class="text-center mt-3 titulo-card">C-Drive Free</p>
+
+
+                <table class="table table-striped">
+
+                    <tr>
+
+                        <td><i class="fas fa-check mr-2 text-secondary"></i>Proyectos Ilimitados</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td><i class="fas fa-check text-secondary mr-2"></i>Descuentos</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td><i class="fas fa-check text-secondary mr-2"></i>Almacenamiento sin limites</td>
+
+                    </tr>
+
+
+                    <hr class="m-0">
+
+                    <div (click)="showFree()" class="text-center mt-3 titulo2-card">
+                        <label for="nombre"></label>
+                        <i class="fas fa-user text-warning mr-2 text-center"></i>Pruebalo Ahora
+                    </div>
+
+                </table>
+
+
+
+            </div>
+
 
 
 
         </div>
-
-        <div class="card mt-4 card-color card-decoration">
-            <div class="p-2 bg-warning"></div>
-            <p class="text-center mt-3 titulo-card">C-Drive Free</p>
-
-
-            <table class="table table-striped">
-
-                <tr>
-
-                    <td><i class="fas fa-check mr-2 text-secondary"></i>Proyectos Ilimitados</td>
-
-                </tr>
-
-                <tr>
-
-                    <td><i class="fas fa-check text-secondary mr-2"></i>Descuentos</td>
-
-                </tr>
-
-                <tr>
-
-                    <td><i class="fas fa-check text-secondary mr-2"></i>Almacenamiento sin limites</td>
-
-                </tr>
-
-              
-                <hr class="m-0">                 
-
-                <div (click)="showFree()"  class="text-center mt-3 titulo2-card">
-                   <label for="nombre"></label>
-                   <i class="fas fa-user text-warning mr-2 text-center" ></i>Pruebalo Ahora
-                </div>              
-
-            </table>
-
-
-
-        </div>
-
-       
-
-
     </div>
-</div>
 
-<div class="registro-b vertical-auto ">
-    <div class="card m-4 border card-color">
-        <div>
-            <h4 class="text-center mt-3 titulo-card">Crea tu cuenta gratis de C-Drive</h4>
-            <div class="container">
-                <form (submit)="singUp()">
-                <div class="row mt-3">
-                   
-                    <label for="nombre" class="col-sm-4" >Nombres</label>
-                    <div  class="col-sm-8">
-                        <input id="nombre" type="text" class="form-control">
-                    </div>
+    <div class="registro-b vertical-auto ">
+        <div class="card m-4 border card-color">
+            <div>
+                <h4 class="text-center mt-3 titulo-card">Crea tu cuenta gratis de C-Drive</h4>
+                <div class="container">
+                    <form [formGroup]="formularioRegistro">
+                        <div class="row mt-3">
+                            <label for="nombre" class="col-sm-4">Nombres</label>
+                            <div class="col-sm-8">
+                                <input formControlName="nombres" id="nombres" type="text" class="form-control">
+                                <div *ngIf="nombres.invalid && (nombres.dirty || nombres.touched)" class="text-danger">
+                                    <span *ngIf="nombres.errors.required">El campo Nombres es requerido</span>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+                        <div class="row mt-3">
+                            <label class="col-sm-4" for="apellidos">Apellidos</label>
+                            <div class="col-sm-8">
+                                <input formControlName="apellidos" name="apellidos" id="apellidos" type="text"
+                                    class="form-control">
+                                <div *ngIf="apellidos.invalid && (apellidos.dirty || apellidos.touched)"
+                                    class="text-danger">
+                                    <span *ngIf="apellidos.errors.required">El campo Apellidos es requerido</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-3">
+                            <label class="col-sm-4" for="email">Email</label>
+                            <div class="col-sm-8">
+                                <input formControlName="email" name="email" id="email" type="email"
+                                    class="form-control">
+                                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                                    <span *ngIf="email.errors.required">El campo Email es requerido</span>
+                                    <span *ngIf="email.errors.pattern">El correo electronico es invalido</span>
+                                    
+                                </div>
+
+                            </div>
+                        </div>
+                        <form [formGroup]="formularioRegistroTarjeta">
+                            <div *ngIf="pro">
+                                <div class="row mt-3">
+                                    <label class="col-sm-4" for="title">Titular de la tarjeta</label>
+                                    <div class="col-sm-8">
+                                        <input formControlName="titular" name="titular" id="title" type="text"
+                                            class="form-control">
+                                        <div *ngIf="titular.invalid && (titular.dirty || titular.touched)"
+                                            class="text-danger">
+                                            <span *ngIf="titular.errors.required">El campo Titular es requerido</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <label class="col-sm-4" for="numberTarget">Numero de Tarjeta</label>
+                                    <div class="col-sm-8">
+                                        <input formControlName="numeroTarjeta"  name="numeroTarjeta"
+                                            id="numberTarget" class="form-control">
+                                        <div *ngIf="numeroTarjeta.invalid && (numeroTarjeta.dirty || numeroTarjeta.touched)" class="text-danger">
+                                            <span *ngIf="numeroTarjeta.errors.required">El campo Numero de tarjeta es requerido</span>
+                                            <span *ngIf="numeroTarjeta.errors.pattern">Solo se admiten numeros</span>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <label class="col-sm-4" for="cvv">codigo CVV</label>
+                                    <div class="col-sm-8">
+                                        <input formControlName="codigoCVV" name="codigoCVV" id="cvv" type="number"
+                                            class="form-control">
+                                        <div *ngIf="codigoCVV.invalid && (codigoCVV.dirty || codigoCVV.touched)"
+                                            class="text-danger">
+                                            <span *ngIf="codigoCVV.errors.required">El campo Codigo CVV es requerido</span>
+                                            <span *ngIf="codigoCVV.errors.pattern">Solo se admiten numeros</span>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3 ">
+
+
+                                    <label class="col-sm-4" for="month">Fecha de expiracion</label>
+
+
+                                    <div class="col-sm-8">
+                                        <div class="d-flex">
+                                            <input formControlName="mes" name="mes" id="month"  min="00"
+                                                max="12" class="form-control  mr-2" placeholder="Mes">
+                                            <input formControlName="anio" name="anio" id="year"  min="14"
+                                                max="22" class="form-control " placeholder="Año">
+                                        </div>
+                                        <div *ngIf="mes.invalid && (mes.dirty || mes.touched)" class="text-danger">
+                                            <span *ngIf="mes.errors.required">El campo Mes es requerido</span>
+                                            <span *ngIf="mes.errors.pattern">Solo se admiten numeros</span>
+                                        </div>
+
+                                        <div *ngIf="anio.invalid && (anio.dirty || anio.touched)" class="text-danger">
+                                            <span *ngIf="anio.errors.required">El campo Año es requerido</span>
+                                            <span *ngIf="anio.errors.pattern">Solo se admiten numeros</span>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                </div>
+
+                            </div>
+                        </form>
+
+                        <div class="row mt-3">
+                            <label class="col-sm-4" for="pass">Constraseña</label>
+                            <div class="col-sm-8">
+                                <input formControlName="password" name="password" id="pass" type="password"
+                                    class="form-control">
+                                <div *ngIf="password.invalid && (password.dirty || password.touched)"
+                                    class="text-danger">
+                                    <span *ngIf="password.errors.required">El campo Contraseña es requerido</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row mt-3">
+                            <label class="col-sm-4" for="repass">Confirmar contraseña</label>
+                            <div class="col-sm-8">
+                                <input formControlName="passwordConfirm" name="passwordConfirm" id="repass"
+                                    type="password" class="form-control">
+                                <div *ngIf="passwordConfirm.invalid && (passwordConfirm.dirty || passwordConfirm.touched)"
+                                    class="text-danger">
+                                    <span *ngIf="passwordConfirm.errors.required">El campo es requerido</span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </form>
+
+
                 </div>
-    
-                <div class="row mt-3">
-                    <label class="col-sm-4" for="apellidos">Apellidos</label>
-                    <div class="col-sm-8">
-                        <input id="apellidos" type="text" class="form-control">
-                    </div>
-                </div>
-    
-                <div class="row mt-3">
-                    <label class="col-sm-4" for="email">Email</label>
-                    <div class="col-sm-8">
-                        <input id="email" type="email" class="form-control">
-                    </div>
+
+                <div *ngIf="alertForm"
+                     class="text-danger">
+                    <span>{{mensaje}}</span>
+                 </div>
+
+
+                <div *ngIf="show">
+                    <a class="btn d-block mt-3 mb-3 bg-success text-white btn-width " (click)="showPro()">Adquiere tu
+                        version Pro</a>
+                    <a class="btn d-block mt-3 mb-3 bg-warning text-white btn-width  " (click)="showFree()">Registrate
+                        Gratis</a>
                 </div>
 
                 <div *ngIf="pro">
-                <div class="row mt-3">
-                    <label class="col-sm-4" for="title">Titular de la tarjeta</label>
-                    <div class="col-sm-8">
-                        <input id="title" type="text" class="form-control">
-                    </div>
+                    <button type="submit" class="btn  mt-3 mb-3 bg-success text-white ml-3 "
+                        (click)="singUp(1)">Enviar</button>
                 </div>
 
-                <div class="row mt-3">
-                    <label class="col-sm-4" for="numberTarget">Numero de Tarjeta</label>
-                    <div class="col-sm-8">
-                        <input id="numberTarget" type="number" class="form-control">
-                    </div>
+                <div *ngIf="free">
+                    <button type="submit" class="btn  mt-3 mb-3 bg-warning text-white ml-3 " (click)="singUp(0)">Enviar
+                    </button>
                 </div>
 
-                <div class="row mt-3">
-                    <label class="col-sm-4" for="cvv">codigo CVV</label>
-                    <div class="col-sm-8">
-                        <input id="cvv" type="number" class="form-control">
-                    </div>
-                </div>
 
-                <div class="row mt-3 ">
-                    <label class="col-sm-4" for="month">Fecha de expiracion</label>
-                    <div class="col-sm-8 d-flex">
-                        <input id="month" type="number" min="00" max="12" class="form-control w-50 mr-2" placeholder="Mes" >
-                        <input id="year" type="number" min="14" max="22" class="form-control w-50" placeholder="Año">
-                    </div>
-                </div>   
-                </div>
-    
-                <div class="row mt-3">
-                    <label class="col-sm-4" for="pass">Constraseña</label>
-                    <div class="col-sm-8">
-                        <input id="pass" type="password" class="form-control">
-                    </div>
-                </div>
-    
-                <div class="row mt-3">
-                    <label class="col-sm-4" for="repass">Confirmar contraseña</label>
-                    <div class="col-sm-8">
-                        <input id="repass" type="password" class="form-control">
-                    </div>
-                </div>
-            </form>     
+
+
+
 
 
             </div>
 
-            <div *ngIf="show">
-                <a class="btn d-block mt-3 mb-3 bg-success text-white btn-width " (click)="showPro()" >Adquiere tu version Pro</a>
-                <a class="btn d-block mt-3 mb-3 bg-warning text-white btn-width ">Registrate Gratis</a>
-            </div>
 
-            <div *ngIf="pro">
-                <a class="btn  mt-3 mb-3 bg-success text-white ml-3 ">Enviar </a>
-            </div> 
-            
-            <div *ngIf="free">
-                <a class="btn  mt-3 mb-3 bg-warning text-white ml-3 ">Enviar </a>
-            </div> 
-
-               
-             
-            
-
-
-           
         </div>
-
-    
     </div>
-</div>
 </div>

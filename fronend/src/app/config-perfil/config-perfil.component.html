@@ -11,7 +11,7 @@
       <div class="dropdown-menu mr-menu" aria-labelledby="dropdownMenuLink">
         <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-credit-card"></i> Detalle de cuenta</a>
         <a class="dropdown-item" href="/config"><i class="fas fa-cog"></i> Configuracion</a>
-        <a class="dropdown-item" href="/home"><i class="fas fa-sign-out-alt"></i> Salir</a>
+        <a class="dropdown-item" (click)="logaut()"><i class="fas fa-sign-out-alt"></i> Salir</a>
       </div>
     </div>
     
@@ -46,31 +46,36 @@
                  
                
             <div class="container">
+              <form [formGroup]="formularioConfig">
                 <div class="row m-3">                   
-                        <input id="nombre" type="text" class="form-control" value="Juan Perez" placeholder="Nombres">                    
+                        <input id="nombre" formControlName="nombres" name="nombres"  type="text" class="form-control"  placeholder="Nombres">                    
                 </div>   
 
                 <div class="row m-3">                   
-                    <input id="apellido" type="text" class="form-control" value="Aguilar Alcachofa" placeholder="Apellidos">                    
+                    <input id="apellido" formControlName="apellidos" name="apellidos" type="text" class="form-control"  placeholder="Apellidos">                    
                   </div>   
     
                   <div class="row m-3">                   
-                    <input id="email" type="email" class="form-control" value="juanito@gmail.com" placeholder="E-mail">                    
+                    <input id="email"  formControlName="email" name="email" type="email" class="form-control"  placeholder="E-mail">                    
                   </div>
     
     
                   <div class="row m-3">                   
-                    <input id="pass" type="password" class="form-control" value="asd.456789" placeholder="Contraseña">                    
-                  </div>   
+                    <input id="pass" formControlName="password" name="password" type="password" class="form-control"  placeholder="Contraseña">                    
+                  </div>
+                  
+                  <div class="row m-3">                   
+                    <input id="passConfim" formControlName="passwordConfirm"  name="passwordConfirm" type="password" class="form-control"  placeholder="Confirmar Contraseña">                    
+                  </div>  
                 
     
     
     
-    
+                </form>
             </div>
         </div>
         <div class="">
-            <a href="/config" class="btn d-block mt-3 mb-3 bg-success text-white btn-width ">Guardar</a>
+            <a (click)="update()" class="btn d-block mt-3 mb-3 bg-success text-white btn-width ">Guardar</a>
             <a href="/config" class="btn d-block mt-3 mb-3 bg-warning text-white btn-width " data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Detalle de cuenta</a>           
          
         </div>
@@ -94,25 +99,25 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
+        <form [formGroup]="formularioTarjetaConfig">
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Numero de Tarjeta</label>
-            <input type="number" class="form-control" id="recipient-name" required>
+            <label for="recipient-name1" class="col-form-label">Numero de Tarjeta</label>
+            <input  formControlName="numeroTarjeta" name="numeroTarjeta" type="number" class="form-control" id="recipient-name" required>
           </div>
 
           <div class="form-group">
             <label for="recipient-name" class="col-form-label">Fecha de Expiración</label>
             <div class="d-flex">
-                <input class="form-control w-25 mr-1" type="number" min="00" max="12" placeholder="Mes" >
-                <input class="form-control w-25" type="number" min="2020" max="2022" placeholder="Año">
+                <input formControlName="mes" name="mes" class="form-control w-25 mr-1" type="number" min="00" max="12" placeholder="Mes" >
+                <input formControlName="anio" name="anio" class="form-control w-25" type="number" min="2020" max="2022" placeholder="Año">
 
             </div>
             
           </div>
 
           <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Codigo CVV</label>
-            <input  size="4" type="number" class="form-control" id="recipient-name" pattern="[0-9]" required>
+            <label for="recipient-name2" class="col-form-label">Codigo CVV</label>
+            <input formControlName="codigoCVV" name="codigoCVV" size="4" type="number" class="form-control" id="recipient-name2" pattern="[0-9]" required>
           </div>
          
         </form>
