@@ -9,7 +9,7 @@
       </a>
     
       <div class="dropdown-menu mr-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-credit-card"></i> Detalle de cuenta</a>
+        <a class="dropdown-item"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-credit-card"></i> Detalle de cuenta</a>
         <a class="dropdown-item" routerLink="/config" routerLinkActive="active"><i class="fas fa-cog"></i> Configuracion</a>
         <a class="dropdown-item" (click)="logout()" ><i class="fas fa-sign-out-alt"></i> Salir</a>
       </div>
@@ -21,18 +21,22 @@
 
    <!-- Sidebar -->
    <div class="bg-light border-right" id="sidebar-wrapper">
-    <div  style="font-size: 1.8rem;" class="sidebar-heading text-center"><i class="fas fa-home"></i>Inicio</div>
+    <div id="home"  style="font-size: 1.8rem;"  class="sidebar-heading text-center" routerLink="/workShop" routerLinkActive="active"><i class="fas fa-home" ></i>Inicio</div>
     <div class="list-group list-group-flush">      
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus-circle"></i> Nuevo Proyecto</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 1</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 2</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 3</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 4</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 5</a>
+      <a  class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus-circle"></i> Nuevo Proyecto</a>
+      <a  class="list-group-item list-group-item-action bg-light" > <i class="far fa-folder"></i> Proyecto 1</a>
+      <a  class="list-group-item list-group-item-action bg-light" ><i class="far fa-folder"></i> Proyecto 2</a>
+      <a  class="list-group-item list-group-item-action bg-light" ><i class="far fa-folder"></i> Proyecto 3</a>
+      <a  class="list-group-item list-group-item-action bg-light" ><i class="far fa-folder"></i> Proyecto 4</a>
+      <a  class="list-group-item list-group-item-action bg-light" ><i class="far fa-folder"></i> Proyecto 5</a>
       
     </div>
   </div>
 <!--Pintar el contenido de la pagina aqui-->
+
+<ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+
+
 
 
 </div>
@@ -77,3 +81,4 @@
     </div>
   </div>
 </div>
+

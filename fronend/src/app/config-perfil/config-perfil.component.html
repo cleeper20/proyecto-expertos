@@ -4,13 +4,13 @@
     </a>
 
     <div class="dropdown show">
-      <a class="btn btn-light mr-4" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a class="btn btn-light mr-4"  role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-bars"></i>
       </a>
     
       <div class="dropdown-menu mr-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-credit-card"></i> Detalle de cuenta</a>
-        <a class="dropdown-item" href="/config"><i class="fas fa-cog"></i> Configuracion</a>
+        <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-credit-card"></i> Detalle de cuenta</a>
+        <a class="dropdown-item" routerLink="/config" routerLinkActive="active"><i class="fas fa-cog"></i> Configuracion</a>
         <a class="dropdown-item" (click)="logaut()"><i class="fas fa-sign-out-alt"></i> Salir</a>
       </div>
     </div>
@@ -23,12 +23,12 @@
    <div class="bg-light border-right" id="sidebar-wrapper">
     <div id="home" routerLink="/workShop" routerLinkActive="active" style="font-size: 1.8rem;"  class="sidebar-heading text-center"><i class="fas fa-home"></i>Inicio</div>
     <div class="list-group list-group-flush">      
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus-circle"></i> Nuevo Proyecto</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 1</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 2</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 3</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 4</a>
-      <a href="/workShop" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 5</a>
+      <a routerLink="/workShop" routerLinkActive="active" class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus-circle"></i> Nuevo Proyecto</a>
+      <a routerLink="/workShop" routerLinkActive="active" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 1</a>
+      <a routerLink="/workShop" routerLinkActive="active" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 2</a>
+      <a routerLink="/workShop" routerLinkActive="active" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 3</a>
+      <a routerLink="/workShop" routerLinkActive="active" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 4</a>
+      <a routerLink="/workShop" routerLinkActive="active" class="list-group-item list-group-item-action bg-light"><i class="far fa-folder"></i> Proyecto 5</a>
       
     </div>
   </div>
@@ -75,8 +75,8 @@
             </div>
         </div>
         <div class="">
-            <a (click)="update()" class="btn d-block mt-3 mb-3 bg-success text-white btn-width ">Guardar</a>
-            <a href="/config" class="btn d-block mt-3 mb-3 bg-warning text-white btn-width " data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Detalle de cuenta</a>           
+            <a (click)="updated(0)" class="btn d-block mt-3 mb-3 bg-success text-white btn-width ">Guardar</a>
+            <a  class="btn d-block mt-3 mb-3 bg-warning text-white btn-width " data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo">Detalle de cuenta</a>           
          
         </div>
     </div>
@@ -123,8 +123,8 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-warning text-white">Actualizar</button>
+        <button  class="btn btn-dark" data-dismiss="modal">Cerrar</button>
+        <button (click)="updated(1)" class="btn btn-warning text-white">Actualizar</button>
       </div>
     </div>
   </div>

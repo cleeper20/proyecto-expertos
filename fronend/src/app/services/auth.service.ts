@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 })
 export class AuthService {
 
+  //private id="5f2fb54a4e074b0fac3c1752";
   private id;
 
   private URL=" http://localhost:8888/user"
@@ -16,8 +17,12 @@ export class AuthService {
     private router:Router,
   ) { }
 
+  actualizar(user){
+    return this.http.put<any>(this.URL+'/updateuser/'+this.id, user)
+  }
+
   SingUp(user){
-    this.http.post<any>(this.URL+'/singup', user).subscribe(
+   this.http.post<any>(this.URL+'/singup', user).subscribe(
       res=>{
         this.id=res.idUser;
       }
@@ -42,6 +47,8 @@ export class AuthService {
   getData(){
    return this.http.get<any>(this.URL+'/'+this.id)
   }
+
+
 
   loggedIn(){
     if(localStorage.getItem('token')){

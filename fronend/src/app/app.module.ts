@@ -12,6 +12,8 @@ import { ArtistasComponent } from './artistas/artistas.component';
 import { NavbarComponent } from './navbar/navbar.component';
 //import { RegistroComponent } from './registro/registro.component';
 
+import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +25,9 @@ import { NavbarComponent } from './navbar/navbar.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    MonacoEditorModule
+  
   ],
 
   exports:[

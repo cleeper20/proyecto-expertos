@@ -5,7 +5,8 @@ import { ConfigPerfilRoutingModule } from './config-perfil-routing.module';
 import { ConfigPerfilComponent } from './config-perfil.component';
 
 import {FormsModule} from '@angular/forms';
-import {ReactiveFormsModule} from '@angular/forms'
+import {ReactiveFormsModule} from '@angular/forms';
+
 
 
 
@@ -15,7 +16,8 @@ import {ReactiveFormsModule} from '@angular/forms'
     CommonModule,
     ConfigPerfilRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+   
   ]
 })
 export class ConfigPerfilModule { }

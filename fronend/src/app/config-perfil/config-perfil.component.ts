@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService } from '../services/auth.service';
 
-import {FormGroup, FormControl, Validators} from '@angular/forms'
+import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {Router} from '@angular/router'
+
 
 
 @Component({
@@ -10,20 +12,32 @@ import {FormGroup, FormControl, Validators} from '@angular/forms'
   styleUrls: ['./config-perfil.component.css']
 })
 export class ConfigPerfilComponent implements OnInit {
-
+mensaje='';
+alertForm=false;
   user={
     nombre:'',
   }
 
   constructor(
     private authService : AuthService,
+    private router: Router
   ) { }
 
   ngOnInit() {
    
 
     this.authService.getData().subscribe(res=>{
-      console.log(res)
+      this.formularioConfig.controls['nombres'].setValue(res.nombres);
+      this.formularioConfig.controls['apellidos'].setValue(res.apellidos);
+      this.formularioConfig.controls['email'].setValue(res.email);
+      this.formularioConfig.controls['password'].setValue('');
+      this.formularioConfig.controls['passwordConfirm'].setValue('');
+
+      this.formularioTarjetaConfig.controls['titular'].setValue(res.titular);
+      this.formularioTarjetaConfig.controls['numeroTarjeta'].setValue(res.numeroTarjeta);
+      this.formularioTarjetaConfig.controls['anio'].setValue(res.fechaExpiracion.anio);
+      this.formularioTarjetaConfig.controls['mes'].setValue(res.fechaExpiracion.mes);
+      this.formularioTarjetaConfig.controls['codigoCVV'].setValue(res.codigoCVV);
     });
     
     //this.formularioConfig.controls['nombres'].setValue(data.nombres);
@@ -53,11 +67,96 @@ export class ConfigPerfilComponent implements OnInit {
     this.authService.logout();
   }
 
-  update(){
-    /*this.user.nombre="Benito Camela"
-     console.log(this.user.nombre)*/
- 
-     
+  updated(i) {
+
+
+    if (i == 0) {
+
+                if (this.formularioConfig.valid == false) {
+                  this.mensaje = "Debe llenar todos los campos"
+                  this.alertForm = true;
+                  
+                  return;
+                }
+
+                if (this.formularioConfig.value.password != this.formularioConfig.value.passwordConfirm) {
+                  this.mensaje = "Las contraseñas no coinciden, intente de nuevo"
+                  this.alertForm = true;
+                 
+                  return;
+                }
+
+                let usuario = {
+                  nombres: this.formularioConfig.value.nombres,
+                  apellidos: this.formularioConfig.value.apellidos,
+                  email: this.formularioConfig.value.email,
+                  titular: '',
+                  numeroTarjeta: '',
+                  fechaExpiracion: { mes: '', anio: '' },
+                  codigoCVV: '',
+                  password: this.formularioConfig.value.password,
+                  tipoCuenta: 'free',
+
+                }
+
+                this.authService.actualizar(usuario).subscribe(
+                  res => {
+                   // localStorage.setItem('token', res.token);
+                    //this.router.navigate(['/workShop'])
+                    console.log(res)
+                  },
+
+                  err => {
+                    console.log(err)
+                  })
+
+
+    }
+
+    if(i==1){
+
+      if (this.formularioConfig.valid == false || this.formularioTarjetaConfig.valid == false ) {
+        this.mensaje = "Debe llenar todos los campos"
+        this.alertForm = true;        
+        return;
+      }
+
+      if (this.formularioConfig.value.password != this.formularioConfig.value.passwordConfirm) {
+        this.mensaje = "Las contraseñas no coinciden, intente de nuevo"
+        this.alertForm = true;
+       
+        return;
+      }
+
+      let usuario={
+        nombres:this.formularioConfig.value.nombres,
+        apellidos:this.formularioConfig.value.apellidos,
+        email:this.formularioConfig.value.email,
+        titular:this.formularioTarjetaConfig.value.titular,
+        numeroTarjeta:this.formularioTarjetaConfig.value.numeroTarjeta,
+        fechaExpiracion:{mes:this.formularioTarjetaConfig.value.mes,anio:this.formularioTarjetaConfig.value.anio},
+        codigoCVV:this.formularioTarjetaConfig.value.codigoCVV,
+        password:this.formularioConfig.value.password,       
+        tipoCuenta:'pro',
+      
+      
+      }
+
+      this.authService.actualizar(usuario).subscribe(
+        res => {
+         // localStorage.setItem('token', res.token);
+         // this.router.navigate(['/workShop'])
+         console.log(res)
+        },
+
+        err => {
+          console.log(err)
+        })
+
+
+    }
+
   }
+
 
 }
