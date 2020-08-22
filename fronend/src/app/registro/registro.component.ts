@@ -198,6 +198,7 @@ export class RegistroComponent implements OnInit {
       this.authService.SingUp(usuario).subscribe(
         res => {
           localStorage.setItem('token', res.token);
+         
           this.router.navigate(['/workShop'])
         },
 

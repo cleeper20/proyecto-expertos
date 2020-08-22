@@ -13,12 +13,15 @@ import { NavbarComponent } from './navbar/navbar.component';
 //import { RegistroComponent } from './registro/registro.component';
 
 import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
   declarations: [
     AppComponent,
     ArtistasComponent,
     NavbarComponent,
+  
     //RegistroComponent
   ],
   imports: [
@@ -26,7 +29,8 @@ import { MonacoEditorModule } from '@materia-ui/ngx-monaco-editor';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    MonacoEditorModule
+    MonacoEditorModule,
+    NgbModule
   
   ],
 

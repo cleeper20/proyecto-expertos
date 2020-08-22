@@ -45,8 +45,9 @@ get password(){
     this.authService.SingIn(this.formularioLogin.value).subscribe(
 
       res=>{
-        console.log(res,'res');
+        //console.log(res,'res');
         localStorage.setItem('token', res.token);
+      
         this.router.navigate(['/workShop']);
       },
 

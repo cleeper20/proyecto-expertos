@@ -8,10 +8,9 @@
         <i class="fas fa-bars"></i>
       </a>
     
-      <div class="dropdown-menu mr-menu" aria-labelledby="dropdownMenuLink">
-        <a class="dropdown-item"  data-toggle="modal" data-target="#exampleModal" data-whatever="@mdo"><i class="far fa-credit-card"></i> Detalle de cuenta</a>
-        <a class="dropdown-item" routerLink="/config" routerLinkActive="active"><i class="fas fa-cog"></i> Configuracion</a>
-        <a class="dropdown-item" (click)="logout()" ><i class="fas fa-sign-out-alt"></i> Salir</a>
+      <div class="dropdown-menu mr-menu" aria-labelledby="dropdownMenuLink">     
+        <a class="dropdown-item " routerLink="/config" routerLinkActive="active"><i class="fas fa-cog"></i> Configuracion</a>
+        <a class="dropdown-item " (click)="logout()" ><i class="fas fa-sign-out-alt"></i> Salir</a>
       </div>
     </div>
     
@@ -23,62 +22,132 @@
    <div class="bg-light border-right" id="sidebar-wrapper">
     <div id="home"  style="font-size: 1.8rem;"  class="sidebar-heading text-center" routerLink="/workShop" routerLinkActive="active"><i class="fas fa-home" ></i>Inicio</div>
     <div class="list-group list-group-flush">      
-      <a  class="list-group-item list-group-item-action bg-light"><i class="fas fa-plus-circle"></i> Nuevo Proyecto</a>
-      <a  class="list-group-item list-group-item-action bg-light" > <i class="far fa-folder"></i> Proyecto 1</a>
-      <a  class="list-group-item list-group-item-action bg-light" ><i class="far fa-folder"></i> Proyecto 2</a>
-      <a  class="list-group-item list-group-item-action bg-light" ><i class="far fa-folder"></i> Proyecto 3</a>
-      <a  class="list-group-item list-group-item-action bg-light" ><i class="far fa-folder"></i> Proyecto 4</a>
-      <a  class="list-group-item list-group-item-action bg-light" ><i class="far fa-folder"></i> Proyecto 5</a>
+
+     <a  class="list-group-item list-group-item-action bg-light pointer" (click)="open(content)" ><i class="fas fa-plus-circle"  ></i> Nueva Carpeta</a>
+      
+    
+      <div ngbDropdown class="d-inline-block border-bottom"  *ngFor="let carpeta of carpetas">
+        <a  ngbDropdownToggle class="list-group-item list-group-item-action bg-light pointer border-0 "   id="dropdownBasic1"   (click)="obtenerSubCarpetas(carpeta._id)"><i class="far fa-folder"></i> {{carpeta.nombre}}</a>
+        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+          <button ngbDropdownItem (click)="open3(content3, carpeta._id, 0)" >Cambiar Nombre </button>
+          <button ngbDropdownItem (click)="open2(content2,carpeta._id,0)">Nueva Carpeta</button>          
+          <button ngbDropdownItem>Nuevo Proyecto</button>
+          <button ngbDropdownItem (click)="eliminarRaiz(carpeta._id)">Eliminar</button>
+        </div>
+      </div>
+    
       
     </div>
   </div>
 <!--Pintar el contenido de la pagina aqui-->
+<!--<ngx-monaco-editor   [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>-->
 
-<ngx-monaco-editor [options]="editorOptions" [(ngModel)]="code"></ngx-monaco-editor>
+        <!--mostrar sub carpetas-->
+        
+          <table class="table" *ngIf="tablaOcultar">
+            <a class="pointer m-2" *ngIf="carpetaPadreId" (click)="volverAtras()" > <i class="fas fa-arrow-left"></i>  Volver Atras</a>   
+            <tbody>
+              <tr *ngFor="let carpeta of subCarpetas; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td class="pointer" (click)="obtenerSubCarpetas(carpeta.idCarpeta)"><i class="fas fa-folder mr-1"></i>{{ carpeta.nombre}}</td>
+                <td>
+                  <div ngbDropdown class="d-inline-block ">
+                    <a  ngbDropdownToggle class="pointer border-0 "   id="dropdownBasic2"  >opciones</a>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                      <button ngbDropdownItem (click)="open3(content3,carpeta.idCarpeta,1)">Cambiar Nombre </button>
+                      <button ngbDropdownItem (click)="open2(content2,carpeta.idCarpeta, carpeta.padre)">Agregar Carpeta</button>
+                      <button ngbDropdownItem>Agregar Proyecto</button>
+                      <button ngbDropdownItem (click)="eliminarCarpetaHija(carpeta.idCarpeta, carpeta.padre)">Eliminar </button>
+                    </div>
+                  </div>
+                </td>                   
+              </tr>
+         
+            </tbody>
+          </table>
 
 
+               
+              
+               
+          
+          
+            <div class="container">
+              <div class="row ">
+                <ngx-monaco-editor  style="height: 15rem; width:100%" [options]="editorOptions1" [(ngModel)]="code1"></ngx-monaco-editor>
+              </div>
 
+              <div class="row mt-5">
+                <ngx-monaco-editor  style="height: 15rem ;  width:100%"   [options]="editorOptions2" [(ngModel)]="code2"></ngx-monaco-editor>
+              </div>
 
-</div>
-
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Tarjeta de Debito</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Numero de Tarjeta</label>
-            <input type="number" class="form-control" id="recipient-name" required>
-          </div>
-
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Fecha de Expiración</label>
-            <div class="d-flex">
-                <input class="form-control w-25 mr-1" type="number" min="00" max="12" placeholder="Mes" >
-                <input class="form-control w-25" type="number" min="2020" max="2022" placeholder="Año">
-
+              <div class="row mt-5">
+                  
+              </div>
             </div>
             
-          </div>
+    
+            
 
-          <div class="form-group">
-            <label for="recipient-name" class="col-form-label">Codigo CVV</label>
-            <input  size="4" type="number" class="form-control" id="recipient-name" pattern="[0-9]" required>
-          </div>
-         
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-dismiss="modal">Cerrar</button>
-        <button type="button" class="btn btn-warning text-white">Actualizar</button>
-      </div>
-    </div>
-  </div>
+
+
+      
+        
+     
+
+
+
+
+
+
 </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">   
+   
+      <span class="ml-auto pointer" (click)="modal.dismiss('Cross click')" ><i class="fas fa-times"></i></span>
+  </div>
+  <div class="modal-body">
+    
+      <input [(ngModel)]="nombreCarpeta" class="form-control" placeholder="Nombre de carpeta">
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark" (click)="crearCapeta()">Guardar</button>
+  </div>
+</ng-template>
+
+<!---agrgar carpta hija-->
+
+<ng-template #content2 let-modal>
+  <div class="modal-header">   
+  
+      <span class="ml-auto pointer" (click)="modal.dismiss('Cross click')" ><i class="fas fa-times"></i></span>
+  </div>
+  <div class="modal-body">
+    
+      <input [(ngModel)]="nombreCarpeta" class="form-control" placeholder="Nombre de carpeta">
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark" (click)="nuevaCarpetaHijaModal()">Guardar</button>
+  </div>
+</ng-template>
+
+<!--cambiar nombre-->
+<ng-template #content3 let-modal>
+  <div class="modal-header">   
+  
+      <span class="ml-auto pointer" (click)="modal.dismiss('Cross click')" ><i class="fas fa-times"></i></span>
+  </div>
+  <div class="modal-body">
+    
+      <input [(ngModel)]="nombreCarpeta" class="form-control" placeholder="Nombre de carpeta">
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark" (click)="cambiarNombre()">Guardar</button>
+  </div>
+</ng-template>
+
+
+
+
 

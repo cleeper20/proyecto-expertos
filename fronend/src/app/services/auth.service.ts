@@ -22,11 +22,11 @@ export class AuthService {
   }
 
   SingUp(user){
-   this.http.post<any>(this.URL+'/singup', user).subscribe(
+  /* this.http.post<any>(this.URL+'/singup', user).subscribe(
       res=>{
         this.id=res.idUser;
       }
-    )
+    )*/
 
     return this.http.post<any>(this.URL+'/singup', user);
   }
