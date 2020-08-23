@@ -5,6 +5,7 @@ var mongoose = require('mongoose')
 
 const jwt = require('jsonwebtoken');//token
 const bcrypt = require('bcrypt-nodejs');
+const { find } = require('../models/carpeta');
 let data='';
 //obtener Carpetas
 router.get('/carpetas/usuario',verificarToken,(req,res)=>{
@@ -37,7 +38,8 @@ router.get('/subCarpetas/:idPadre',verificarToken,(req,res)=>{
     
     carpeta.find({_id:req.params.idPadre},{subCarpetas:true, _id:true, proyectos:true,  padre:true},{returnOriginal: false}).then(
         resultado=> {
-            res.status(200).send(resultado[0])
+            //console.log(resultado[0].proyectos)
+            res.status(200).json(resultado[0])
             res.end();   
         },
 
@@ -161,13 +163,53 @@ router.delete('/removerHijo/:idCarpetaPadre/:idSubCarpeta',verificarToken,(req,r
 
 
 })
+//obtener proyecto
+
+router.get('/proyecto/:idProyecto/carpeta/:idCarpeta',verificarToken, (req,res)=>{
+    carpeta.find({_id:req.params.idCarpeta, "proyectos._id":mongoose.Types.ObjectId(req.params.idProyecto)}).then(
+   resultado=> {
+              
+
+                let respuesta={};
+               respuesta = obtenerElemento(resultado[0].proyectos,req.params.idProyecto);
+               res.status(200).send(respuesta);
+               res.end();
+
+            }).catch(
+                err=>{
+                    res.status(400).send();
+                    res.end();
+                }
+                
+            )
+    
+})
+
+function obtenerElemento(arreglo,idProyecto){
+    let proyecto={};
+    if(!arreglo){
+        return proyecto;
+    }
+
+    arreglo.forEach((elemento,i) => {
+            if(elemento._id==idProyecto){
+                proyecto=elemento;
+                return proyecto;
+            }
+        
+    });
+
+    return proyecto;
+}
 
 //guardar proyectos
-router.post('/proyectoAgregar/:idCarpeta', (req,res)=>{
+router.post('/proyectoAgregar/:idCarpeta',verificarToken, (req,res)=>{
     carpeta.updateOne({_id:req.params.idCarpeta},{
         $push:{
             proyectos:{
                 _id:mongoose.Types.ObjectId(),
+                padre:req.params.idCarpeta,
+                nombre:req.body.nombre,
                 html:req.body.html,
                 js:req.body.js,
                 css:req.body.css
@@ -185,6 +227,61 @@ router.post('/proyectoAgregar/:idCarpeta', (req,res)=>{
         }
     )
 })
+
+//eliminar proyecto
+router.delete('/eliminarProyecto/:idProyecto/carpeta/:idCarpeta',verificarToken,(req,res)=>{
+        carpeta.find({_id:req.params.idCarpeta, "proyectos._id":mongoose.Types.ObjectId(req.params.idProyecto)}     
+        ).then(
+            resultado=>{
+             let = arregloActalizado=[];
+             
+             arregloActalizado = actualizarArrayProyectos(resultado[0].proyectos,req.params.idProyecto)
+
+                        carpeta.update({_id:req.params.idCarpeta, "proyectos._id":mongoose.Types.ObjectId(req.params.idProyecto)},{
+                            proyectos:arregloActalizado
+                        }).then(
+                            resultado2=>{
+                                res.status(200).send(resultado2);
+                                res.end();
+                            }
+                        ).catch(
+                            err=>{
+                                res.status(400).send(err);
+                                res.send();
+                            }
+                        )
+
+            }
+        ).catch(
+            err=>{
+                res.status(400).send(err);
+                res.end();
+            }
+        )
+}
+)
+
+function actualizarArrayProyectos(arreglo, idProyecto){
+    // console.log(arreglo)
+    if(arreglo){
+      let indice=null;
+      arreglo.forEach((proyecto,i) => {
+          if(proyecto._id == idProyecto){
+                  indice=i;  
+          }
+      });
+      
+      arreglo.splice(indice,1)
+      return arreglo;
+  
+    }else{
+          return
+      }
+        
+  }
+
+
+
 
 //borrar carpeta hija y decendientes
 router.delete('/eleminarCarpeta/:idCarpeta/:idCarpetaPadre',verificarToken,(req,res)=>{

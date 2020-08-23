@@ -45,7 +45,8 @@ export class AuthService {
   }
 
   getData(){
-   return this.http.get<any>(this.URL+'/'+this.id)
+    
+   return this.http.get<any>(this.URL+'/')
   }
 
 

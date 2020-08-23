@@ -3,10 +3,9 @@ const router = express.Router();// importar el router para recibir peticiones
 const modelUser = require('../models/user');//importar el model user
 const jwt = require('jsonwebtoken');//token
 const bcrypt = require('bcrypt-nodejs');
+let datos='';
 
-router.get('/', (req,res)=>{
-    res.send('hola desde router usuarios')
-})
+
 
 //nuevo usuario
 router.post('/singup', async (req,res)=>{
@@ -52,9 +51,9 @@ router.post('/singin', async (req,res)=>{
 });
 
 //buscar usuario
-
-router.get('/:id', verificarToken , (req,res)=>{
-        modelUser.find({_id:req.params.id}).then(consulta =>{
+console.log(datos)
+router.get('/', verificarToken , (req,res)=>{
+        modelUser.find({_id:datos._id}).then(consulta =>{
             res.status(200).send(consulta[0]);//el elemento cero del arreglo de objetos
             res.end();
         }).catch(error=>{
@@ -137,7 +136,7 @@ function verificarToken(req, res, next){
   
     const payload = jwt.verify(token, 'palabraSecreta', function(err, decoded){
         if(!err){
-            
+            datos=decoded;
             req.userId = decoded;//una vez recuperado el id guardado detro del token lo guardo
             //console.log(payload); //imprimo el id del usuario que estaba guardado en el token
             next();//continuar 

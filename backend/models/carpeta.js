@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt-nodejs');
 var esquema = new mongoose.Schema(
     {
         nombre:String,
-        idUser:String,
+        idUser:String,        
         padre:String,
         subCarpetas:Array,
         proyectos:Array,

@@ -31,7 +31,7 @@
         <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
           <button ngbDropdownItem (click)="open3(content3, carpeta._id, 0)" >Cambiar Nombre </button>
           <button ngbDropdownItem (click)="open2(content2,carpeta._id,0)">Nueva Carpeta</button>          
-          <button ngbDropdownItem>Nuevo Proyecto</button>
+          <button ngbDropdownItem (click)="open4(content4,carpeta._id,0)">Nuevo Proyecto</button>
           <button ngbDropdownItem (click)="eliminarRaiz(carpeta._id)">Eliminar</button>
         </div>
       </div>
@@ -44,20 +44,34 @@
 
         <!--mostrar sub carpetas-->
         
-          <table class="table" *ngIf="tablaOcultar">
+          <table class="table" *ngIf="mostrarTabla; else elseBlock">
             <a class="pointer m-2" *ngIf="carpetaPadreId" (click)="volverAtras()" > <i class="fas fa-arrow-left"></i>  Volver Atras</a>   
             <tbody>
               <tr *ngFor="let carpeta of subCarpetas; let i = index">
-                <th scope="row">{{i+1}}</th>
-                <td class="pointer" (click)="obtenerSubCarpetas(carpeta.idCarpeta)"><i class="fas fa-folder mr-1"></i>{{ carpeta.nombre}}</td>
+                <th scope="row">Carpeta {{i+1}}</th>
+                <td class="pointer" (click)="obtenerSubCarpetas(carpeta.idCarpeta)"><i class="fas fa-folder mr-1"></i>{{carpeta.nombre}}</td>
                 <td>
                   <div ngbDropdown class="d-inline-block ">
                     <a  ngbDropdownToggle class="pointer border-0 "   id="dropdownBasic2"  >opciones</a>
                     <div ngbDropdownMenu aria-labelledby="dropdownBasic2">
                       <button ngbDropdownItem (click)="open3(content3,carpeta.idCarpeta,1)">Cambiar Nombre </button>
                       <button ngbDropdownItem (click)="open2(content2,carpeta.idCarpeta, carpeta.padre)">Agregar Carpeta</button>
-                      <button ngbDropdownItem>Agregar Proyecto</button>
+                      <button ngbDropdownItem (click)="open4(content4,carpeta.idCarpeta,carpeta.padre)">Agregar Proyecto</button>
                       <button ngbDropdownItem (click)="eliminarCarpetaHija(carpeta.idCarpeta, carpeta.padre)">Eliminar </button>
+                    </div>
+                  </div>
+                </td>                   
+              </tr>
+
+              <tr *ngFor="let proyecto of proyectos; let i = index">
+                <th scope="row">Proyecto {{i+1}}</th>
+                <td class="pointer" ><i class="far fa-file-code mr-2"></i>{{proyecto.nombre}}</td>
+                <td>
+                  <div ngbDropdown class="d-inline-block ">
+                    <a  ngbDropdownToggle class="pointer border-0 "   id="dropdownBasic2"  >opciones</a>
+                    <div ngbDropdownMenu aria-labelledby="dropdownBasic2">                  
+                      <button ngbDropdownItem (click)="abrirProyecto(proyecto._id,proyecto.padre)">Abrir</button>                   
+                      <button ngbDropdownItem (click)="eliminarProyecto(proyecto._id,proyecto.padre)">Eliminar </button>
                     </div>
                   </div>
                 </td>                   
@@ -72,24 +86,27 @@
               
               <!---Edito de codigo--> 
           
-          
+          <ng-template #elseBlock>
             <div class="container">
-              <div class="row mt-1">
-                <ngx-monaco-editor  style="height: 15rem; width:100%" [options]="editorOptions1" [(ngModel)]="code1"></ngx-monaco-editor>
+              <div> HTML Code  <button class="btn btn-outline-secondary m-2" (click)="GuardarHtml()"> Descargar <i class="fas fa-download"></i></button></div>
+              <div class="row mb-5">                
+                <ngx-monaco-editor #html  style="height: 15rem; width:100%" [options]="editorOptions1" [(ngModel)]="code1"></ngx-monaco-editor>
               </div>
 
-              <div class="row mt-5">
-                <ngx-monaco-editor  style="height: 15rem ;  width:100%"   [options]="editorOptions2" [(ngModel)]="code2"></ngx-monaco-editor>
+              JS Code  <button class="btn btn-outline-secondary m-2" (click)="GuardarJs()"> Descargar <i class="fas fa-download"></i></button>
+              <div class="row mb-5">                
+                <ngx-monaco-editor #js  style="height: 15rem ;  width:100%"   [options]="editorOptions2" [(ngModel)]="code2"></ngx-monaco-editor>
+              </div>
+              Css Code <button class="btn btn-outline-secondary m-2" (click)="GuardarCss()"> Descargar <i class="fas fa-download"></i></button>
+              <div class="row mb-5">                
+                <ngx-monaco-editor #css style="height: 15rem ;  width:100%"   [options]="editorOptions3" [(ngModel)]="code3"></ngx-monaco-editor>
               </div>
 
-              <div class="row mt-5">
-                <ngx-monaco-editor  style="height: 15rem ;  width:100%"   [options]="editorOptions3" [(ngModel)]="code3"></ngx-monaco-editor>
-              </div>
-
-              <div class="row mt-5">
+              <div class="row">
               <iframe #iframe id="renderizar"  style="height: 20rem ;  width:100%"></iframe>
               
-              <div class="ml-auto d-flex mt-2 mb-4">
+              <div class="ml-auto d-flex justify-content-between mt-2 mb-4">
+                <input [(ngModel)]="nombreProyecto" class="mr-2" placeholder="Nombre de proyecto">
                 <div>  <button class="btn btn-success mr-2" (click)="mostrarContenido()">Ejecutar</button></div>
                 <div> <button class="btn btn-outline-secondary" (click)="guardarProyecto()">Guardar <i class="far fa-save"></i></button></div> 
              
@@ -97,7 +114,7 @@
               
               </div>
             </div>
-            
+          </ng-template>
             
             
 
@@ -156,6 +173,21 @@
   </div>
   <div class="modal-footer">
     <button type="button"  class="btn btn-outline-dark" (click)="cambiarNombre()">Guardar</button>
+  </div>
+</ng-template>
+
+<!--guardar proyecto-->
+<ng-template #content4 let-modal>
+  <div class="modal-header">   
+  
+      <span class="ml-auto pointer" (click)="modal.dismiss('Cross click')" ><i class="fas fa-times"></i></span>
+  </div>
+  <div class="modal-body">
+    
+      <input [(ngModel)]="nombreCarpeta" class="form-control" placeholder="Nombre de proyecto">
+  </div>
+  <div class="modal-footer">
+    <button type="button"  class="btn btn-outline-dark" (click)="agregarProyecto()">Guardar</button>
   </div>
 </ng-template>
 

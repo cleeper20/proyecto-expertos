@@ -57,9 +57,9 @@ export class AreaTrabajoComponent implements OnInit {
 
 
 
-  code1 = this.getCode1();
-  code2 = this.getCode2();
-  code3 = this.getCode3();
+  code1 = '';
+  code2 = '';
+  code3 = '';
 
   //variables
   carpetas=[];
@@ -74,14 +74,18 @@ export class AreaTrabajoComponent implements OnInit {
 
   indice=5;
 
-  tablaOcultar=false;
+  mostrarTabla=true;
+  //variables proyecto
+  idCarpetaProyecto='';
+  idProyecto='';
+  nombreProyecto='';
 
   constructor(
     private authSerive: AuthService,
     private monacoLoaderService: MonacoEditorLoaderService,
     private carpetaService:CarpetaService,
     private modalService: NgbModal,
-    private renderer: Renderer2,
+    
 
   ) {
           this.monacoLoaderService.isMonacoLoaded$
@@ -207,6 +211,20 @@ mostrarContenido(){
     });
   }
 
+  open4(content4, idCarpeta, padre){
+
+    this.idCarpeta=idCarpeta; 
+    this.padre=padre
+    
+   
+
+    this.modalService.open(content4, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -253,10 +271,11 @@ mostrarContenido(){
     
     this.carpetaService.obtenerSubCarpetas(id).subscribe(
       res=>{
-        //console.log(res);
+       // console.log(res);
         this.subCarpetas=res.subCarpetas;
         this.proyectos=res.proyectos
         this.carpetaPadreId=res.padre
+        this.mostrarTabla=true;
       },
       err=>{
         console.log(err);
@@ -367,19 +386,118 @@ mostrarContenido(){
   }
 
   guardarProyecto(){
-
+    let nombre='';
+    if(!this.nombreProyecto){
+        this.nombreProyecto='Proyecto nuevo'
+    }
     let proyecto ={
       html:this.code1,
       js:this.code2,
-      css:this.code3
+      css:this.code3,
+      nombre:this.nombreProyecto,
+      padre:this.idCarpetaProyecto,
+
     }
 
-    console.log(proyecto);
+    this.carpetaService.agregarProyeto(this.idCarpetaProyecto, proyecto).subscribe(
+      res=>{
+            //console.log(res)
+            this.mostrarTabla=true;
+     
+      }, 
+      err=>{
+        console.log(err);
+      }
+    )
+
 
     
   }
+
+  agregarProyecto(){
+
+    let datos = {
+      html:'',
+      js:'',
+      css:'',
+      nombre:this.nombreCarpeta,
+      padre:this.padre
+    }
+
+    //console.log(datos);
+    this.carpetaService.agregarProyeto(this.idCarpeta,datos).subscribe(
+        res=>{
+         // console.log(res);
+         this.obtenerSubCarpetas(this.idCarpeta);
+         this.modalService.dismissAll();
+         this.nombreCarpeta='';
+        
+        },
+        err=>{
+          console.log(err);
+        }
+    )
+    
+    
+
+  }
+
+  abrirProyecto(idproyecto, padre){
+    this.carpetaService.abrirProyecto(idproyecto,padre).subscribe(
+      res=>{
+           // console.log(res)
+            this.code1=res.html;
+            this.code2=res.js;
+            this.code3=res.css;
+            this.idCarpetaProyecto=res.padre;
+            this.idProyecto=res._id
+            this.mostrarTabla=false;
+      }, 
+      err=>{
+        console.log(err);
+      }
+    )
+  }
+
+  eliminarProyecto(proyectoId,padre){
+      this.carpetaService.eliminarProyecto(proyectoId, padre).subscribe(
+        res=>{
+            this.obtenerSubCarpetas(padre);
+        }
+      ),
+      err=>{
+        console.log(err);
+      }
+  }
+
+  GuardarHtml(){
+    //you can enter your own file name and extension
+    this.escribirArchivo(this.code1, 'Sample File html'+'.html', 'text/html');
+  }
   
+
+//----------------------------------------guardar JS
+  GuardarJs(){
+    //you can enter your own file name and extension
+    this.escribirArchivo(this.code2, 'Sample File js'+'.js', 'text/html');
+  }
+
+  //-------------------------guardar Css
+  GuardarCss(){
+    //you can enter your own file name and extension
+    this.escribirArchivo(this.code3, 'Sample File css'+'.css', 'text/html');
+  }
+
+  escribirArchivo(contenido, nombreArchivo, contentType) {
+    var a = document.createElement('a');
+    var file = new Blob([contenido], {type: contentType});
+    a.href = URL.createObjectURL(file);
+    a.download = nombreArchivo;
+    a.click();
+  }
   
 
 
 }
+
+

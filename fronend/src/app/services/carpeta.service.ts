@@ -42,4 +42,17 @@ eliminarCarpetahija(idCarpeta, idCarpetaPadre):Observable<any>{
   return this.httpClient.delete(this.URL+`/eleminarCarpeta/${idCarpeta}/${idCarpetaPadre}`)
 }
 
+agregarProyeto(idCarpeta,datos):Observable<any>{
+ return this.httpClient.post(this.URL+`/proyectoAgregar/${idCarpeta}`,datos);
+
+}
+
+eliminarProyecto(idProyecto,idCarpeta):Observable<any>{
+ return this.httpClient.delete(this.URL+`/eliminarProyecto/${idProyecto}/carpeta/${idCarpeta}`)
+}
+
+abrirProyecto(idProyecto,idCarpeta):Observable<any>{
+  return this.httpClient.get(this.URL+`/proyecto/${idProyecto}/carpeta/${idCarpeta}`);
+}
+
 }

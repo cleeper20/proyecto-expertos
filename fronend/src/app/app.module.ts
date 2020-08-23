@@ -8,7 +8,7 @@ import {TokenInterceptorService} from './services/token-interceptor.service'
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ArtistasComponent } from './artistas/artistas.component';
+
 import { NavbarComponent } from './navbar/navbar.component';
 //import { RegistroComponent } from './registro/registro.component';
 
@@ -19,7 +19,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
-    ArtistasComponent,
+   
     NavbarComponent,
   
     //RegistroComponent
