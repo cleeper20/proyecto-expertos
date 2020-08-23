@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild,ElementRef , Renderer2  } from '@angular/core';
 import {AuthService} from '../services/auth.service';
 import { filter, take } from 'rxjs/operators';
 import {
@@ -10,6 +10,8 @@ import {
 
 import {CarpetaService} from '../services/carpeta.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 
 
 @Component({
@@ -19,8 +21,11 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 })
 
 
+
 export class AreaTrabajoComponent implements OnInit {
+  @ViewChild('iframe') iframe: ElementRef;
   @ViewChild(MonacoEditorComponent, { static: false })
+
   monacoComponent: MonacoEditorComponent;
 
   editorOptions1: MonacoEditorConstructionOptions = {
@@ -34,7 +39,7 @@ export class AreaTrabajoComponent implements OnInit {
 
   editorOptions2: MonacoEditorConstructionOptions = {
     theme: 'vs-dark',
-    language: 'javaScript',
+    language: 'javascript',
     //roundedSelection: true,
     autoIndent: true,
    // renderLineHighlight: "all",
@@ -43,7 +48,7 @@ export class AreaTrabajoComponent implements OnInit {
 
   editorOptions3: MonacoEditorConstructionOptions = {
     theme: 'vs-dark',
-    language: 'css',
+    language:'css',
     //roundedSelection: true,
     autoIndent: true,
    // renderLineHighlight: "all",
@@ -76,6 +81,8 @@ export class AreaTrabajoComponent implements OnInit {
     private monacoLoaderService: MonacoEditorLoaderService,
     private carpetaService:CarpetaService,
     private modalService: NgbModal,
+    private renderer: Renderer2,
+
   ) {
           this.monacoLoaderService.isMonacoLoaded$
           .pipe(
@@ -100,6 +107,8 @@ export class AreaTrabajoComponent implements OnInit {
           });
     
    }
+
+ 
 
   ngOnInit(): void {
       this.obtenerCarpetas();
@@ -135,13 +144,33 @@ export class AreaTrabajoComponent implements OnInit {
 
     getCode3() {
       return (
-        ` <style type="text/css">
-          p { color: black; }
-         </style> `
+        `h1 {
+          color: #FF0000
+        }`
         );
       }
 
+//-----------------renderizar-----------
+mostrarContenido(){
 
+  let contenido =`
+  <style>
+  ${this.code3}  
+  </style>
+
+  ${this.code1}
+
+  <script>
+  ${this.code2}
+  
+  </script>  
+  ` 
+  let doc =  this.iframe.nativeElement.contentDocument || this.iframe.nativeElement.contentWindow;
+    doc.open();
+    doc.writeln(contenido);
+    doc.close();
+
+}
 
   //-----------------moda----------------------
   open(content) {

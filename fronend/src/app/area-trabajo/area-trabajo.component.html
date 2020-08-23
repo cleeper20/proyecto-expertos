@@ -67,9 +67,10 @@
           </table>
 
 
-               
+          <button class="btn btn-primary" (click)="mostrarContenido()">mostrar</button>
+    
               
-               
+              <!---Edito de codigo--> 
           
           
             <div class="container">
@@ -82,11 +83,15 @@
               </div>
 
               <div class="row mt-5">
-                  
+                <ngx-monaco-editor  style="height: 15rem ;  width:100%"   [options]="editorOptions3" [(ngModel)]="code3"></ngx-monaco-editor>
+              </div>
+
+              <div class="row mt-5">
+              <iframe #iframe id="renderizar"  style="height: 20rem ;  width:100%"></iframe>
               </div>
             </div>
             
-    
+            
             
 
 
