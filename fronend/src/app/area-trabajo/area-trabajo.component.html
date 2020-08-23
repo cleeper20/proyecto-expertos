@@ -67,14 +67,14 @@
           </table>
 
 
-          <button class="btn btn-primary" (click)="mostrarContenido()">mostrar</button>
+         
     
               
               <!---Edito de codigo--> 
           
           
             <div class="container">
-              <div class="row ">
+              <div class="row mt-1">
                 <ngx-monaco-editor  style="height: 15rem; width:100%" [options]="editorOptions1" [(ngModel)]="code1"></ngx-monaco-editor>
               </div>
 
@@ -88,6 +88,13 @@
 
               <div class="row mt-5">
               <iframe #iframe id="renderizar"  style="height: 20rem ;  width:100%"></iframe>
+              
+              <div class="ml-auto d-flex mt-2 mb-4">
+                <div>  <button class="btn btn-success mr-2" (click)="mostrarContenido()">Ejecutar</button></div>
+                <div> <button class="btn btn-outline-secondary" (click)="guardarProyecto()">Guardar <i class="far fa-save"></i></button></div> 
+             
+              </div>
+              
               </div>
             </div>
             

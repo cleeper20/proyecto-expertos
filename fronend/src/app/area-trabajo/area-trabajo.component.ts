@@ -10,7 +10,7 @@ import {
 
 import {CarpetaService} from '../services/carpeta.service';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+
 
 
 
@@ -222,7 +222,7 @@ mostrarContenido(){
   obtenerCarpetas(){
     this.carpetaService.obtenerCarpetas().subscribe(
       res=>{
-        console.log(res);
+        //console.log(res);
         this.carpetas=res;
       },
       err=>{
@@ -253,7 +253,7 @@ mostrarContenido(){
     
     this.carpetaService.obtenerSubCarpetas(id).subscribe(
       res=>{
-        console.log(res);
+        //console.log(res);
         this.subCarpetas=res.subCarpetas;
         this.proyectos=res.proyectos
         this.carpetaPadreId=res.padre
@@ -267,7 +267,7 @@ mostrarContenido(){
 
   volverAtras(){
     //console.log(id) rendirzar codigo
-    console.log(this.carpetaPadreId);
+    //console.log(this.carpetaPadreId);
     this.obtenerSubCarpetas(this.carpetaPadreId);
   }
 
@@ -277,7 +277,7 @@ mostrarContenido(){
     this.carpetaPadreId=padre;
     this.carpetaService.nuevaCapetaHija(idCarpeta,'nueva carpeta22').subscribe(
       res=>{
-      console.log(res);
+     // console.log(res);
        this.obtenerSubCarpetas(idCarpeta)     
       },
       err=>{
@@ -288,10 +288,10 @@ mostrarContenido(){
 
   nuevaCarpetaHijaModal(){
     this.carpetaPadreId=this.padre;
-    console.log(this.nombreCarpeta);
+    //console.log(this.nombreCarpeta);
     this.carpetaService.nuevaCapetaHija(this.idCarpeta,this.nombreCarpeta).subscribe(
       res=>{
-      console.log(res);
+    //  console.log(res);
        this.obtenerSubCarpetas(this.idCarpeta)
        this.modalService.dismissAll();
        this.nombreCarpeta='';     
@@ -304,10 +304,10 @@ mostrarContenido(){
 
   cambiarNombre(){
     if(this.indice == 0){
-    console.log(this.idCarpeta)
+   // console.log(this.idCarpeta)
       this.carpetaService.cambiarNombre(this.nombreCarpeta,this.idCarpeta).subscribe(
         res=>{
-        console.log(res);
+       // console.log(res);
         this.obtenerCarpetas();
          //this.obtenerSubCarpetas(this.idCarpeta)
          this.modalService.dismissAll();
@@ -320,10 +320,10 @@ mostrarContenido(){
     }
 
     if(this.indice==1){
-      console.log(this.idCarpeta)
+     // console.log(this.idCarpeta)
       this.carpetaService.cambiarNombre(this.nombreCarpeta,this.idCarpeta).subscribe(
         res=>{
-        console.log(res);
+      //  console.log(res);
         //this.obtenerCarpetas();
          this.obtenerSubCarpetas(this.carpetaPadreId)
          this.modalService.dismissAll();
@@ -343,7 +343,7 @@ mostrarContenido(){
   eliminarRaiz(idCarpeta){
     this.carpetaService.eliminarCarpetaRaiz(idCarpeta).subscribe(
       res=>{
-      console.log(res);
+  //    console.log(res);
       this.obtenerCarpetas();
        
       },
@@ -356,7 +356,7 @@ mostrarContenido(){
   eliminarCarpetaHija(idHijo,idPadre){
     this.carpetaService.eliminarCarpetahija(idHijo,idPadre).subscribe(
       res=>{
-      console.log(res);
+    //  console.log(res);
       this.obtenerSubCarpetas(idPadre)
        
       },
@@ -364,6 +364,19 @@ mostrarContenido(){
         console.log(err);
       }
     ) 
+  }
+
+  guardarProyecto(){
+
+    let proyecto ={
+      html:this.code1,
+      js:this.code2,
+      css:this.code3
+    }
+
+    console.log(proyecto);
+
+    
   }
   
   

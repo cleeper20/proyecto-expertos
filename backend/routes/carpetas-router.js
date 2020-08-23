@@ -162,6 +162,30 @@ router.delete('/removerHijo/:idCarpetaPadre/:idSubCarpeta',verificarToken,(req,r
 
 })
 
+//guardar proyectos
+router.post('/proyectoAgregar/:idCarpeta', (req,res)=>{
+    carpeta.updateOne({_id:req.params.idCarpeta},{
+        $push:{
+            proyectos:{
+                _id:mongoose.Types.ObjectId(),
+                html:req.body.html,
+                js:req.body.js,
+                css:req.body.css
+            }
+        }
+    }).then(
+        resultado=>{
+            res.status(200).send(resultado);
+            res.end();
+        }
+    ).catch(
+        err=>{
+            res.status(400).send(err);
+            res.end();
+        }
+    )
+})
+
 //borrar carpeta hija y decendientes
 router.delete('/eleminarCarpeta/:idCarpeta/:idCarpetaPadre',verificarToken,(req,res)=>{
 var pps=0;
@@ -290,7 +314,8 @@ function eliminarSubCarpetas(subCarpetas){
 //agregar proyecto
 
 
-//rrecuperar id
+
+//recuperar id
 function verificarToken(req, res, next){
     if(!req.headers.authorization){// el token se envia por el encabezado de la peticion 
         return res.status(401).send('Unathorize Request');
